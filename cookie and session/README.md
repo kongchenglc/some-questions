@@ -2,3 +2,6 @@
 
 cooike  
 当向HTTP服务器请求某个URL时，浏览器将该URL与客户主机中存储的所有Cookie比较，如果发现域名相匹配Cookie，则匹配 Cookie中包含名字/值的那一行将被包含在HTTP请求头中，以保证依赖于Cookie的功能得以实现。
+
+
+普通的ajax(json)请求和jsop跨域请求是默认携带cookie的，而cors跨域请求和fetch请求默认是不携带cookie的。
