@@ -83,14 +83,21 @@
 
 
 		//渐变
+		//线性渐变
 		var gradient = ctx.createLinearGradient(300, 300, 350, 350);
 		gradient.addColorStop(0, "white");
 		gradient.addColorStop(1, "black");
-
 		ctx.fillStyle = gradient;
 
 		ctx.fillRect(300,300,100,100);
 
+		//放射渐变
+		var gradient = ctx.createRadialGradient(450, 350, 10, 450, 350, 50);
+		gradient.addColorStop(0, "white"); 
+		gradient.addColorStop(1, "black");
+		ctx.fillStyle = gradient;
+
+		ctx.fillRect(400, 300, 100, 100);
 	</script>
 </body>
 </html>
