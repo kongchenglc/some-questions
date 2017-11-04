@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+</head>
+<body>
+	<canvas id="theCanvas" width="500" height="500">canvas is not support</canvas>
+	<script>
+		const theCanvas = document.getElementById('theCanvas');
+		const ctx = theCanvas.getContext('2d');
+		ctx.strokeStyle = "red"
+		ctx.fillStyle = "blue";
+
+		ctx.strokeRect(20,20,150,100);
+
+
+		//阴影
+		ctx.shadowOffsetX = 5;
+		ctx.shadowOffsetY = 5;
+		ctx.shadowBlur = 4;
+		ctx.shadowColor = "rgba(0,0,0,.5)";
+
+
+		//导出图片
+		const imgURI = theCanvas.toDataURL('image/png');
+		console.log(imgURI);
+		let image = document.createElement('img');
+		image.src = imgURI;
+		document.body.appendChild(image);
+
+		//矩形是唯一可以直接绘制的图形。
+		ctx.fillRect(1,1,10,10);
+		ctx.clearRect(2,2,100,100);
+
+		//曲线
+		ctx.beginPath(); //开启曲线
+		ctx.arc(250,250,250,0,5,false);	//false顺时针
+		// ctx.fill();
+		ctx.stroke();
+		//裁剪
+		ctx.save();	//只会将图形状态压入栈，不会保存当前路径与位置。
+		ctx.clip();
+		//裁剪之后绘制的内容只会在裁剪的范围里显示，可以使用save和restore方法存档。
+		ctx.fillStyle = 'green';
+		ctx.fillRect(250,0,190,100);
+
+		//读档
+		ctx.restore();
+
+		//画相切与三点连接的折线的弧
+		ctx.moveTo(250,250);
+		ctx.lineTo(250,0);	//当前点
+		ctx.arcTo(0,0,0,250,100);
+		ctx.stroke();
+
+		//贝塞尔曲线
+		ctx.moveTo(0,250);
+		ctx.bezierCurveTo(250,0,250,500,500,250);
+		ctx.stroke();
+
+		console.log(ctx.isPointInPath(490,100));
+
+		//绘制文本
+		ctx.font = "bold 20px Arial";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.strokeText("asdf",250,250); //默认坐标对应文字的左下角
+
+		//变换，之后的绘制会先对绘制做变换矩阵处理，再绘制出来
+		ctx.save();
+
+		ctx.translate(250,250);
+		ctx.rotate(Math.PI);
+		ctx.moveTo(0,0);
+		ctx.lineTo(150,150);
+		ctx.stroke();
+
+		//save 和 restore
+		//只会保存绘图上下文的设置和变换，不会保存绘图上下文的内容。
+		ctx.restore();
+
+
+
+		//渐变
+		var gradient = ctx.createLinearGradient(300, 300, 350, 350);
+		gradient.addColorStop(0, "white");
+		gradient.addColorStop(1, "black");
+
+		ctx.fillStyle = gradient;
+
+		ctx.fillRect(300,300,100,100);
+
+	</script>
+</body>
+</html>
