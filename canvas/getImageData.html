@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getImageData</title>
+	<style>
+		#canvas {
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="216px" height="384px"></canvas>
+	<img style="display: none;" src="leon2.png" alt="leon" id="leonImg">
+	<script>
+		window.onload = ()=>{
+
+			const canvas = document.getElementById('canvas');
+			const ctx = canvas.getContext('2d');
+			const leonImg = document.getElementById('leonImg');
+
+			ctx.drawImage(leonImg, 0, 0, 216, 384);
+			let imageData = ctx.getImageData(0, 0, 216, 384);
+			let data = imageData.data;
+			console.log(imageData);
+
+			for (let i = 0, len = data.length; i < len; i += 4) {
+				data[i] = data[i+1] = data[i+2] = Math.floor( (data[i] + data[i+1] + data[i+2]) / 3 ) ;
+			}
+			ctx.putImageData(imageData, 0, 0);
+
+		}
+	</script>
+</body>
+</html>
