@@ -10,11 +10,16 @@ function add(a,b) {
     max = str2;
     min = str1;
   }
+  while(max.length > min.length) {
+  	min.unshift('0');
+  }
   var maxL = max.length;
   var minL = min.length;
+  console.log(min);
+  console.log(max);
   for(var i = 1;i <= minL; i++) {
     var ad = parseInt(min[minL-i])+parseInt(max[maxL-i]);
-    console.log(parseInt(max[maxL-i]) + '+' + parseInt(min[minL-i]));
+    console.log('i'+ i + ad + '=' + parseInt(max[maxL-i]) + '+' + parseInt(min[minL-i]));
     if(ad >= 10) {
       max[maxL-i] = ad % 10;
       if(i === maxL) {
@@ -26,7 +31,8 @@ function add(a,b) {
     } else {
       max[maxL-i] = ad;
     }
+    console.log('max' + max);
   }
   return max.join('');
 }
-console.log(add('9999','1111'));
+console.log(add('999','1'));
