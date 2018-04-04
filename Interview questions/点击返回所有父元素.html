@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+	<div style="width: 100px;height: 100px;background-color: #ccc">
+		<div class="zxcv" style="width: 80px;height: 80px;background-color: #aaa">
+			<div id="asdf" style="width: 50px;height: 50px;background-color: #666">
+			</div>
+		</div>
+	</div>
+    <script>
+	function genCss() {
+	    let obj = arguments[0]
+	    const result = []
+
+	    getResult(obj)
+
+	    function getResult(node) {
+	        let father = node
+	        if (father !== document) {
+	            if (father.id != '') {
+	                result.unshift(`#${father.id}`)
+	            } else if (father.className !== '') {
+	                result.unshift(`.${father.className}`)
+	            } else {
+	                result.unshift(father.tagName)
+	            }
+	            getResult(father.parentNode)
+	        }
+	    }
+	    return result.join(' ')
+	}
+
+
+	document.onclick = event => {
+		console.log(document.querySelector(genCss(event.target)))
+	}
+    </script>
+</body>
+
+</html>
