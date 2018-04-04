@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function Box(width, height, bgColor) {
+			this.width = width
+			this.height = height
+			this.bgColor = bgColor
+			return this
+		}
+		Box.prototype = {
+			constructor: Box,
+			remove() {
+				setTimeout(function() {
+					var boxArray = document.getElementsByClassName('theBox')
+					for(var index = 0; index < boxArray.length;) {
+						boxArray[index].parentNode.removeChild(boxArray[index])
+					}
+				}, this.timer*1000)
+			},
+			delay(timer) {
+				this.timer = timer
+				return this				
+			},
+			addTo(setInIt) {
+				this.dom = document.createElement('div');
+				this.dom.style.width = this.width + 'px'
+				this.dom.style.height = this.height + 'px'
+				this.dom.style.background = this.bgColor
+				this.dom.className = 'theBox'
+				document.getElementsByTagName(setInIt)[0].appendChild(this.dom)
+				return this
+			},
+		}
+
+		new Box(100, 100, 'red').addTo('body').addTo('body').delay(3).remove()
+	</script>
+</body>
+</html>
