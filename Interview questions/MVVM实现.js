@@ -93,4 +93,70 @@ function Observe(data) {
 function Compile(el, vm) {
     vm.$el = document.querySelector(el);
     let fragment = document.createDocumentFragment();
+
+    while(child = vm.$el.firstChild) {
+        fragment.appendChild(child);
+    }
+
+    function replace(frag) {
+        Array.from(frag.childNodes).forEach(node => {
+            let txt = node.textContent;
+            let reg = /\{\{(.*?)\}\}/g    
+
+            // nodeType = 3 文本节点 2属性 1元素
+            if(node.nodeType === 3 && reg.test(txt)) {
+                let arr = RegExp.$1.split('.')
+                let val = vm;   //viewModle
+                arr.forEach(key => {
+                    val = val[key]
+                })
+                node.textContent = txt.replace(reg, val).trim();
+
+                new Watcher(vm, RegExp.$1, newVal => {
+                    node.textContent = txt.replace(reg, newVal).trim();    
+                });
+            }
+
+            // 递归子节点
+            if(node.childNodes && node.childNodes.length) {
+                replace(node);
+            }
+        })
+
+    }
+    replace(fragment)
+    vm.$el.appendChild(fragment)
 }
+
+
+// 发布订阅
+function Dep() {
+    this.subs = [];
+}
+Dep.prototype = {
+    addSub(sub) {
+        this.subs.push(sub);
+    },
+    notify() {
+        this.subs.forEach(sub => sub.update());
+    }
+}
+
+
+// 监听函数
+function Watcher(vm, exp, fn) {
+    this.fn = fn;
+    this.vm = vm;
+    this.exp = exp;
+    Dep.target = this;
+    let arr = exp.split('.');
+    let val = vm;
+    arr.forEach(key => {    // 取值
+       val = val[key];     // 获取到this.a.b，默认就会调用get方法
+    });
+    Dep.target = null;
+}
+Watcher.prototype.update = function() {
+    this.fn();
+}
+
