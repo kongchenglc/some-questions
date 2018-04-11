@@ -69,12 +69,14 @@ function observe(data) {
     return new Observe(data);
 }
 function Observe(data) {
+    let dep = new Dep();
     for(let key in data) {
         let val = data[key]
         observe(val)
         Object.defineProperty(data, key, {
             configurable: true,
             get() {
+                Dep.target && dep.addSub(Dep.target);
                 return val
             },
             set(newVal) {
@@ -83,6 +85,7 @@ function Observe(data) {
                 }
                 val = newVal
                 observe(newVal)
+                dep.notify()
             }
         })
     }
@@ -113,10 +116,9 @@ function Compile(el, vm) {
                 node.textContent = txt.replace(reg, val).trim();
 
                 new Watcher(vm, RegExp.$1, newVal => {
-                    node.textContent = txt.replace(reg, newVal).trim();    
+                    node.textContent = txt.replace(reg, newVal).trim();
                 });
             }
-
             // 递归子节点
             if(node.childNodes && node.childNodes.length) {
                 replace(node);
@@ -151,12 +153,18 @@ function Watcher(vm, exp, fn) {
     Dep.target = this;
     let arr = exp.split('.');
     let val = vm;
-    arr.forEach(key => {    // 取值
+    arr.forEach(key => {   // 取值
        val = val[key];     // 获取到this.a.b，默认就会调用get方法
     });
     Dep.target = null;
 }
 Watcher.prototype.update = function() {
-    this.fn();
+    let arr = this.exp.split('.');
+    let val = this.vm;
+    arr.forEach(key => {    
+        val = val[key];   // 通过get获取到新的值
+    });
+    this.fn(val);
 }
+
 
