@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html, body, textarea {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		.textarea {
+			margin: 15px 0;
+			width: 100vw;
+			height: 40vh;
+		}
+	</style>
+</head>
+<body>
+	<textarea class="textarea" name="" id="codeArea" cols="30" rows="10">
+		main()
+
+		{
+
+			int  a,b;
+
+			a = 10;
+
+			b = a + 20;
+
+		}
+	</textarea>
+	<br>
+	<button onclick="parse()">解析</button>
+	<textarea class="textarea" name="" id="result" cols="30" rows="10"></textarea>
+	<script>
+		const codeArea = document.getElementById('codeArea');
+		const reserveWord = ['auto','break','case','char','const','continue','default','do','double','else','enum','extern','float','for','goto','if','int','long','register','return','short','signed','sizeof','static','struct','switch','typedef','union','unsigned','void','volatile','while','main']
+		const operatorOrDelimiter = ["+", "-", "*", "/", "<", "<=", ">", ">=", "=", "==","!=", ";", "(", ")", "^", ",", "\"", "\'", "#", "&","&&", "|", "||", "%", "~", "<<", ">>", "[", "]", "{","}", "\\", ".", "\?", ":", "!"]
+		let lines = []
+		let result = ''
+
+		function parse() {
+			lines = codeArea.value.split('\n')
+				.map(line => {
+					return line.trim()
+				})
+				.filter(line => {
+					return line
+				})
+
+			lines.map(line => {
+				parseLine(line)
+			})
+			print(result)
+		}
+
+		function parseLine(line) {
+			searchKeyWord(line)
+			searchOperator(line)
+			searchNumber(line)
+		}
+
+		function print(result) {
+			let resultArea = document.getElementById('result')
+			resultArea.value = result
+		}
+
+		function searchKeyWord(line) {
+			let aSpan = line.match(/^[a-zA-Z]+/)
+			if(aSpan) {
+				let index = reserveWord.indexOf(aSpan[0])
+				if(index !== -1) {
+					result +=`${reserveWord[index]}           保留字\n`
+				} else {
+					result +=`${aSpan}           标识符\n`
+				}
+			}
+			if(aSpan)
+			parseLine(line.replace(aSpan, ''));
+		}
+
+		function searchOperator(line) {
+			let aSpan = line.match(/^[^a-zA-Z0-9]/)
+			if(aSpan) {
+				let index = operatorOrDelimiter.indexOf(aSpan[0])
+				if(index !== -1) {
+					result +=`${operatorOrDelimiter[index]}           界符\n`
+				}
+			}
+			if(aSpan)
+			parseLine(line.replace(aSpan, ''));
+		}
+
+		function searchNumber(line) {
+			let aSpan = line.match(/^[0-9]+/)
+			if(aSpan) {
+				result +=`${aSpan}           数字\n`
+			}
+			if(aSpan)
+			parseLine(line.replace(aSpan, ''));
+		}
+	</script>
+</body>
+</html>
