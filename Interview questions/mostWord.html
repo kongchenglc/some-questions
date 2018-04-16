@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		
+		const str = "I believe Kendall wanted the American Idol audition so much that she willed herself to move again. One of her friends brought a microphone to the hospital and put it on her bed. Every day, Kendall tried hard to pick it up with her right hand. It was more important for her to pick up that mic than a spoon or fork."
+
+		let map = {}
+		str.split(' ').map(item => {
+			if(map[item] === undefined) {
+				map[item] = 1
+			} else {
+				map[item] = map[item] + 1
+			}
+		})
+
+		console.log(map)
+	</script>
+</body>
+</html>
