@@ -60,7 +60,7 @@ function Mvvm(options = {}) {
             }
         })
     }
-    new Compile(options.el, this);
+    Compile(options.el, this);
 }
 
 // 数据劫持
@@ -76,7 +76,7 @@ function Observe(data) {
         Object.defineProperty(data, key, {
             configurable: true,
             get() {
-                Dep.target && dep.addSub(Dep.target);
+                dep.target && dep.addSub(Dep.target);
                 return val
             },
             set(newVal) {
@@ -166,5 +166,3 @@ Watcher.prototype.update = function() {
     });
     this.fn(val);
 }
-
-
