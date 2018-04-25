@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#aaa {
+			width: 100px;
+			height: 100px;
+			background-color: #ccc;
+		}
+		#bbb {
+			width: 50px;
+			height: 50px;
+			background-color: #aaa;
+		}
+		#ccc {
+			width: 20px;
+			height: 20px;
+			background-color: #ddd;
+		}
+	</style>
+</head>
+<body>
+	<div id="aaa">a</div>
+	<div id="bbb">b</div>
+	<div id="ccc">c</div>
+
+	<script>
+		let a = document.getElementById('aaa')
+		let b = document.getElementById('bbb')
+		let c = document.getElementById('ccc')
+
+
+		// 添加属性
+		// 方法1
+		let pro = document.createAttribute('style')	//创建属性节点
+		pro.value = 'display:none'
+		a.setAttributeNode(pro)
+
+		// 方法2
+		// a.setAttribute('style', 'display:none')
+		
+
+		// 插入元素
+		a.appendChild(c);
+		a.insertBefore(b,c);
+
+
+		// 添加文本节点
+		let d = document.createTextNode('新增文本内容')
+		c.appendChild(d)
+		c.innerHTML = '12138'
+
+
+		// 删除节点
+		a.removeChild(b)
+		// 删除属性
+		a.removeAttribute('style')
+		// 或者
+		// a.removeAttributeNode(pro)
+
+
+		// 修改节点
+		a.replaceChild(b,c)
+	</script>
+</body>
+</html>
