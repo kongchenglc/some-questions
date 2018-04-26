@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    [class^='row-']:nth-child(odd) {
+        background: #F9F9F9;
+    }
+
+    [class^='row-']:nth-child(even) {
+        background: #fff;
+    }
+
+    [class^='row-'] {
+        height: 50px;
+    }
+
+	[class^='col-'] {
+		border: 1px solid #ccc;
+		width: 100px;
+		height: 100%;
+		display: inline-block;
+	}
+
+
+    #model {
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        background-color: rgba(10, 10, 10, .5);
+        border-radius: 5px;
+        text-align: center;
+        transition: all 2s ease-in 1s;
+        opacity: 1;
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="model">
+    </div>
+    <div id="tab">
+        <div class="row-1">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-2">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-3">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-4">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-5">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-6">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+        <div class="row-7">
+        	<div class='col-1'></div
+        	><div class='col-2'></div
+        	><div class='col-3'></div>
+        </div>
+    <script>
+    window.onload = function() {
+        let model = document.getElementById('model')
+        if (window.location.search.split("&")[0].split("=")[1] === 'success') {
+            model.style.display = 'block'
+            model.offsetWidth
+            model.innerHTML = '更新成功'
+            model.style.opacity = 0
+            setTimeout(() => model.style.display = 'none', 3000)
+        } else if (window.location.search.split("&")[0].split("=")[1] === 'fail') {
+            model.style.display = 'block'
+            model.offsetWidth
+            model.innerHTML = '更新失败'
+            model.style.opacity = 0
+            setTimeout(() => model.style.display = 'none', 3000)
+        }
+    }
+
+
+    function addSelectEvent() {
+    	let table = document.querySelector('#tab')
+    	console.log(table)
+    	table.onclick = function(event) {
+    		console.log(event.target)
+    	}
+    }
+    addSelectEvent()
+
+    </script>
+</body>
+
+</html>
