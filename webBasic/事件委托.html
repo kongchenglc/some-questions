@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+	div {
+		box-sizing: border-box;
+		user-select: none;
+	}
+
     [class^='row-']:nth-child(odd) {
-        background: #F9F9F9;
+        /*background: #F9F9F9;*/
+        background: #bbb;
     }
 
     [class^='row-']:nth-child(even) {
@@ -90,23 +96,65 @@
             model.innerHTML = '更新成功'
             model.style.opacity = 0
             setTimeout(() => model.style.display = 'none', 3000)
+            window.location.search = ''
         } else if (window.location.search.split("&")[0].split("=")[1] === 'fail') {
             model.style.display = 'block'
             model.offsetWidth
             model.innerHTML = '更新失败'
             model.style.opacity = 0
             setTimeout(() => model.style.display = 'none', 3000)
+            window.location.search = ''
         }
     }
 
 
     function addSelectEvent() {
     	let table = document.querySelector('#tab')
-    	console.log(table)
-    	table.onclick = function(event) {
-    		console.log(event.target)
+    	let select = {
+    		selecting: false,
+    		row: '',
+    		colStart: '',
+    		colOver: '',
     	}
+    	table.onmousedown = function(event) {
+    		if(event.target.className.match(/col/)) {	
+	    		select.selecting = true
+	    		select.row = event.target.parentElement.className.match(/\d/)[0]
+	    		select.colStart = event.target.className.match(/\d/)[0]
+    		}
+    	}
+    	table.onmouseup = function(event) {
+    		if(select.selecting && select.row === event.target.parentElement.className.match(/\d/)[0]) {
+    			select.colOver = event.target.className.match(/\d/)[0]
+    			selectRender();
+    		}
+    		select.selecting = false
+    	}
+
+	    function selectRender() {
+	    	let theRow = document.querySelector(`.row-${select.row}`)
+	    	let cols = theRow.querySelectorAll(`[class^=col-]`)
+	    	let start,over
+	    	if(select.colStart < select.colOver) {
+				start = select.colStart - 1
+				over = select.colOver - 1
+	    	}
+	    	else {
+				start = select.colOver - 1
+				over = select.colStart - 1
+	    	}
+
+	    	for (let i = start; i <= over; i++) {
+	    		cols[i].style.background = '#CCC'
+	    	}
+
+    		console.log(`row: ${select.row}`)
+    		console.log(`col1: ${select.colStart}`)
+    		console.log(`col2: ${select.colOver}`)
+	    }
     }
+
+
     addSelectEvent()
 
     </script>
