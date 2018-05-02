@@ -10,6 +10,10 @@
 		user-select: none;
 	}
 
+	#tab {
+		position: relative;
+	}
+
     [class^='row-']:nth-child(odd) {
         /*background: #F9F9F9;*/
         background: #bbb;
@@ -30,27 +34,32 @@
 		display: inline-block;
 	}
 
+	#add {
+		position: absolute;
+		top: 10px;
+		left: 0;
+		border-radius: 20px;
+		width: 30px;
+		height: 30px;
+		box-shadow: 1px 1px 1px #ccc;
+		border: none;
+	}
+	#add:focus {
+		border: 1px solid #ccc;
+		outline: none;
+	}
 
-    #model {
-        width: 200px;
-        height: 50px;
-        line-height: 50px;
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        background-color: rgba(10, 10, 10, .5);
-        border-radius: 5px;
-        text-align: center;
-        transition: all 2s ease-in 1s;
-        opacity: 1;
-        display: none;
-    }
+	#add-model {
+		background-color: #ccc;
+		height: 50px;
+		position: absolute;
+		display: none;
+	}
+
     </style>
 </head>
 
 <body>
-    <div id="model">
-    </div>
     <div id="tab">
         <div class="row-1">
         	<div class='col-1'></div
@@ -87,24 +96,22 @@
         	><div class='col-2'></div
         	><div class='col-3'></div>
         </div>
+	</div>
+
+	<div id="model-back">
+		<div id="add-model">
+	        <button id="add">+</button>
+	    </div>
+	</div>
+
     <script>
-    window.onload = function() {
-        let model = document.getElementById('model')
-        if (window.location.search.split("&")[0].split("=")[1] === 'success') {
-            model.style.display = 'block'
-            model.offsetWidth
-            model.innerHTML = '更新成功'
-            model.style.opacity = 0
-            setTimeout(() => model.style.display = 'none', 3000)
-            window.location.search = ''
-        } else if (window.location.search.split("&")[0].split("=")[1] === 'fail') {
-            model.style.display = 'block'
-            model.offsetWidth
-            model.innerHTML = '更新失败'
-            model.style.opacity = 0
-            setTimeout(() => model.style.display = 'none', 3000)
-            window.location.search = ''
-        }
+	let addBut = document.querySelector('#add')
+	let addModel = document.querySelector('#add-model')
+    document.documentElement.onmousedown = function() {
+    	addModel.style.display = 'none'
+    }
+    addModel.onmousedown = function(event) {
+    	event.stopPropagation()
     }
 
 
@@ -135,6 +142,8 @@
 	    	let theRow = document.querySelector(`.row-${select.row}`)
 	    	let cols = theRow.querySelectorAll(`[class^=col-]`)
 	    	let start,over
+
+
 	    	if(select.colStart < select.colOver) {
 				start = select.colStart - 1
 				over = select.colOver - 1
@@ -145,7 +154,14 @@
 	    	}
 
 	    	for (let i = start; i <= over; i++) {
-	    		cols[i].style.background = '#CCC'
+	    		// cols[i].style.background = '#CCC'
+	    		// cols[i].dataset.selectd = true
+	    		addModel.style.display = 'block'
+	    		addBut.style.left = (over - start + 1)*50 - 15 + 'px'
+
+	    		addModel.style.width = (over - start + 1) * 100 + 'px'
+	    		addModel.style.top = table.offsetTop + 50*(select.row-1) + 'px'
+	    		addModel.style.left = table.offsetLeft + 100 * start + 'px'
 	    	}
 
     		console.log(`row: ${select.row}`)
