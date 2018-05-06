@@ -172,6 +172,7 @@
 	const addBut = document.querySelector('#add-button')
 	const addModel = document.querySelector('#add-model')
 	const addInput = document.querySelector('#add-input')
+	const classData = []
 
 
     document.documentElement.onmousedown = function() {
@@ -243,11 +244,11 @@
 	    		aBlockInput.value = aBlock.innerText
 	    		aBlockInput.onkeyup = function(event) {
 	    			if(event.key === 'Enter' && this.value) {
-	    				console.log(this.value)
 				    	aBlock.innerHTML = this.value + '<input class="a-block-input"></input>'
 	    			}
 	    		}
 	    	}
+	    	classData.push(select)
 
 	    	addInput.value = ''
 	    	addModel.style.display = 'none'
@@ -271,8 +272,6 @@
 	    	}
 
 	    	for (let i = start; i <= over; i++) {
-	    		// cols[i].style.background = '#CCC'
-	    		// cols[i].dataset.selectd = true
 	    		addModel.style.display = 'block'
 	    		addBut.style.left = (over - start + 1)*50 - 15 + 'px'
 
@@ -280,10 +279,6 @@
 	    		addModel.style.top = table.offsetTop + 50*(select.row-1) + 'px'
 	    		addModel.style.left = table.offsetLeft + 100 * start + 'px'
 	    	}
-
-    		console.log(`row: ${select.row}`)
-    		console.log(`col1: ${select.colStart}`)
-    		console.log(`col2: ${select.colOver}`)
 	    }
     }
 
