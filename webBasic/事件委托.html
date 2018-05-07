@@ -172,8 +172,63 @@
 	const addBut = document.querySelector('#add-button')
 	const addModel = document.querySelector('#add-model')
 	const addInput = document.querySelector('#add-input')
-	const classData = []
+	const classData = [
+		{selecting: false, row: "5", colStart: "5", colOver: "5", value: "计算机网络"},
+		{selecting: false, row: "3", colStart: "2", colOver: "4", value: "编译原理"}
+	]
+	let table = document.querySelector('#tab')
+	let select = {
+		selecting: false,
+		row: '',
+		colStart: '',
+		colOver: '',
+	}
 
+	function tableInit() {
+		classData.map(aClass => {
+			select = aClass
+			addBlock(aClass.value)
+		})
+		select = {
+			selecting: false,
+			row: '',
+			colStart: '',
+			colOver: '',
+		}
+	}
+
+    function addBlock(text) {
+    	let aBlock = document.createElement('div')
+    	let theColNumber = Math.abs(select.colStart - select.colOver) + 1
+
+    	aBlock.style.width = theColNumber * 100 + 'px'
+    	aBlock.style.top = table.offsetTop + 50 * (select.row - 1) + 'px'
+		aBlock.style.left = table.offsetLeft + 100 * ((select.colStart<select.colOver?select.colStart:select.colOver) - 1) + 'px'
+    	aBlock.className = 'a-block'
+    	aBlock.innerHTML = text + '<input class="a-block-input"></input>'
+    	table.parentNode.appendChild(aBlock);
+
+    	aBlock.onmouseover = () => select = {
+    		selecting: false,
+    		row: '',
+    		colStart: '',
+    		colOver: '',
+    	}
+    	aBlock.ondblclick = () => {
+    		let aBlockInput = aBlock.querySelector('.a-block-input')
+    		aBlockInput.style.display = 'block'
+    		aBlockInput.value = aBlock.innerText
+    		aBlockInput.onkeyup = function(event) {
+    			if(event.key === 'Enter' && this.value) {
+			    	aBlock.innerHTML = this.value + '<input class="a-block-input"></input>'
+    			}
+    		}
+    	}
+    	addInput.value = ''
+    	addModel.style.display = 'none'
+    	addInput.style.display = 'none'
+    	addBut.style.display = 'block'
+    }
 
     document.documentElement.onmousedown = function() {
     	addModel.style.display = 'none'
@@ -191,15 +246,7 @@
     }
 
 
-    addSelectEvent()
     function addSelectEvent() {
-    	let table = document.querySelector('#tab')
-    	let select = {
-    		selecting: false,
-    		row: '',
-    		colStart: '',
-    		colOver: '',
-    	}
     	table.onmousedown = function(event) {
     		if(event.target.className.match(/col/)) {	
 	    		select.selecting = true
@@ -217,44 +264,13 @@
 
     	addInput.onkeyup = function(event) {
 	    	if(event.key === 'Enter' && this.value) {
+				select.value = this.value
+		    	classData.push(select)
 		    	addBlock(this.value)
 	    	}
 	    }
 
-	    function addBlock(text) {
-	    	let aBlock = document.createElement('div')
-	    	let theColNumber = Math.abs(select.colStart - select.colOver) + 1
 
-	    	aBlock.style.width = theColNumber * 100 + 'px'
-	    	aBlock.style.top = table.offsetTop + 50 * (select.row - 1) + 'px'
-    		aBlock.style.left = table.offsetLeft + 100 * ((select.colStart<select.colOver?select.colStart:select.colOver) - 1) + 'px'
-	    	aBlock.className = 'a-block'
-	    	aBlock.innerHTML = text + '<input class="a-block-input"></input>'
-	    	table.parentNode.appendChild(aBlock);
-
-	    	aBlock.onmouseover = () => select = {
-	    		selecting: false,
-	    		row: '',
-	    		colStart: '',
-	    		colOver: '',
-	    	}
-	    	aBlock.ondblclick = () => {
-	    		let aBlockInput = aBlock.querySelector('.a-block-input')
-	    		aBlockInput.style.display = 'block'
-	    		aBlockInput.value = aBlock.innerText
-	    		aBlockInput.onkeyup = function(event) {
-	    			if(event.key === 'Enter' && this.value) {
-				    	aBlock.innerHTML = this.value + '<input class="a-block-input"></input>'
-	    			}
-	    		}
-	    	}
-	    	classData.push(select)
-
-	    	addInput.value = ''
-	    	addModel.style.display = 'none'
-	    	addInput.style.display = 'none'
-	    	addBut.style.display = 'block'
-	    }
 
 	    function selectRender() {
 	    	let theRow = document.querySelector(`.row-${select.row}`)
@@ -274,7 +290,6 @@
 	    	for (let i = start; i <= over; i++) {
 	    		addModel.style.display = 'block'
 	    		addBut.style.left = (over - start + 1)*50 - 15 + 'px'
-
 	    		addModel.style.width = (over - start + 1) * 100 + 'px'
 	    		addModel.style.top = table.offsetTop + 50*(select.row-1) + 'px'
 	    		addModel.style.left = table.offsetLeft + 100 * start + 'px'
@@ -282,6 +297,8 @@
 	    }
     }
 
+    addSelectEvent()
+	tableInit()
 
 
     </script>
