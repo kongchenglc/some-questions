@@ -7,12 +7,12 @@
     <style>
 	#tab {
 		user-select: none;
-		position: relative;
+		position: absolute;
+		width: 600px;
 	}
 
     [class^='row-']:nth-child(odd) {
         background: #F9F9F9;
-        /*background: #bbb;*/
     }
 
     [class^='row-']:nth-child(even) {
@@ -102,8 +102,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-2">
         	<div class='col-1'></div
@@ -111,8 +110,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-3">
         	<div class='col-1'></div
@@ -120,8 +118,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-4">
         	<div class='col-1'></div
@@ -129,8 +126,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-5">
         	<div class='col-1'></div
@@ -138,8 +134,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-6">
         	<div class='col-1'></div
@@ -147,8 +142,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
         <div class="row-7">
         	<div class='col-1'></div
@@ -156,8 +150,7 @@
         	><div class='col-3'></div
         	><div class='col-4'></div
         	><div class='col-5'></div
-        	><div class='col-6'></div
-        	><div class='col-7'></div>
+        	><div class='col-6'></div>
         </div>
 	</div>
 
@@ -173,8 +166,8 @@
 	const addModel = document.querySelector('#add-model')
 	const addInput = document.querySelector('#add-input')
 	const classData = [
-		{selecting: false, row: "5", colStart: "5", colOver: "5", value: "计算机网络"},
-		{selecting: false, row: "3", colStart: "2", colOver: "4", value: "编译原理"}
+		{row: "5", colStart: "5", colOver: "5", value: "计算机网络"},
+		{row: "3", colStart: "2", colOver: "4", value: "编译原理"}
 	]
 	let table = document.querySelector('#tab')
 	let select = {
