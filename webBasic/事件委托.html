@@ -7,8 +7,10 @@
     <style>
 	#tab {
 		user-select: none;
-		position: absolute;
+		position: relative;
 		width: 600px;
+		margin-top: 100px;
+		margin-left: 200px;
 	}
 
     [class^='row-']:nth-child(odd) {
@@ -23,7 +25,22 @@
         height: 50px;
     }
 
+	[class^='header-'] {
+		text-align: center;
+		border: 1px solid #ddd;
+		width: 100px;
+		height: 100%;
+		display: inline-block;
+		box-sizing: border-box;
+	}
+	
+	.top-header {
+		position: absolute;
+		top: -30px;
+	}
+
 	[class^='col-'] {
+	 	text-align: center;
 		border: 1px solid #ddd;
 		width: 100px;
 		height: 100%;
@@ -95,7 +112,16 @@
 </head>
 
 <body>
+	<button onclick="clearAll()" type="button">重置</button>
     <div id="tab">
+    	<div class="top-header">
+        	<div class='header-1'>1-2</div
+        	><div class='header-2'>3-4</div
+        	><div class='header-3'>中午</div
+        	><div class='header-4'>5-6</div
+        	><div class='header-5'>7-8</div
+        	><div class='header-6'>9-10</div>
+        </div>
         <div class="row-1">
         	<div class='col-1'></div
         	><div class='col-2'></div
@@ -177,6 +203,12 @@
 		colOver: '',
 	}
 
+	function clearAll() {
+		Array.from(document.querySelectorAll('.a-block')).map(item => {
+			item.parentNode.removeChild(item)
+		})
+	}
+
 	function tableInit() {
 		classData.map(aClass => {
 			select = aClass
@@ -214,6 +246,8 @@
     		aBlockInput.onkeyup = function(event) {
     			if(event.key === 'Enter' && this.value) {
 			    	aBlock.innerHTML = this.value + '<input class="a-block-input"></input>'
+    			} else if(event.key === 'Enter' && this.value === '') {
+    				aBlock.parentNode.removeChild(aBlock)
     			}
     		}
     	}
@@ -292,7 +326,6 @@
 
     addSelectEvent()
 	tableInit()
-
 
     </script>
 </body>
