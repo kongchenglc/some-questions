@@ -408,7 +408,7 @@
 	    		select.selecting = true
 	    		select.row = event.target.parentElement.className.match(/\d/)[0]
 	    		select.colStart = event.target.className.match(/\d/)[0]
-	    		select.week = Number(theWeek[theWeek.length-1])
+	    		select.week = Number(theWeek.match(/\d+/))
     		}
     	}
     	table.onmouseup = function(event) {
