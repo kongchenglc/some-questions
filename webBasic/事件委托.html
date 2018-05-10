@@ -25,6 +25,11 @@
         height: 50px;
     }
 
+	.top-header {
+		position: absolute;
+		top: -30px;
+	}
+
 	[class^='header-'] {
 		text-align: center;
 		border: 1px solid #ddd;
@@ -33,11 +38,30 @@
 		display: inline-block;
 		box-sizing: border-box;
 	}
-	
-	.top-header {
+
+	.left-header {
 		position: absolute;
-		top: -30px;
+		left: -110px
 	}
+
+	.left-day {
+		text-align: center;
+		border: 1px solid #ddd;
+		width: 100px;
+		height: 50px;
+		box-sizing: border-box;
+	}
+
+	.left-week {
+		position: absolute;
+		left: -59px;
+		width: 60px;
+		height: 350px;
+		text-align: center;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+		line-height: 350px;
+	}	
 
 	[class^='col-'] {
 	 	text-align: center;
@@ -112,8 +136,18 @@
 </head>
 
 <body>
-	<button onclick="clearAll()" type="button">重置</button>
+	<button class="clear-all" onclick="clearAll()" type="button">重置</button>
     <div id="tab">
+    	<div class="left-header">
+    		<div class="left-week">第一周</div>
+    		<div class="left-day">星期一</div>
+    		<div class="left-day">星期二</div>
+    		<div class="left-day">星期三</div>
+    		<div class="left-day">星期四</div>
+    		<div class="left-day">星期五</div>
+    		<div class="left-day">星期六</div>
+    		<div class="left-day">星期天</div>
+    	</div>
     	<div class="top-header">
         	<div class='header-1'>1-2</div
         	><div class='header-2'>3-4</div
