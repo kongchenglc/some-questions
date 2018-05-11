@@ -337,7 +337,7 @@
 	function tableInit() {
 		classData.map(aClass => {
 			select = aClass
-			addBlock(aClass.value)
+			addBlock(aClass.value, select)
 		})
 		select = {
 			selecting: false,
@@ -348,7 +348,7 @@
 		}
 	}
 
-    function addBlock(text) {
+    function addBlock(text, select) {
     	let aBlock = document.createElement('div')
     	let theColNumber = Math.abs(select.colStart - select.colOver) + 1
 
@@ -423,7 +423,7 @@
 	    	if(event.key === 'Enter' && this.value) {
 				select.value = this.value
 		    	classData.push(select)
-		    	addBlock(this.value)
+		    	addBlock(this.value, select)
 	    	}
 	    }
 
