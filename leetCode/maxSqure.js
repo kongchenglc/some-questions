@@ -24,6 +24,6 @@ var maximalSquare = function(matrix) {
 	return maxArea
 };
 
-const arr = [['1','0','1','0','0'],['1','0','1','1','1'],['1','1','1','1','1'],['1','0','0','1','0']]
+const arr = [['1','1','1','0','0'],['1','1','1','0','0'],['1','1','1','0','0'],['0','0','0','0','0']]
 console.log(arr)
 console.log(maximalSquare(arr))
