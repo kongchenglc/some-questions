@@ -1,3 +1,8 @@
+//530. 二叉搜索树的最小绝对差
+//给定一个所有节点为非负值的二叉搜索树，求树中任意两节点的差的绝对值的最小值。
+
+//搜索树即排序树、查找树，中序遍历完为有序数列
+
 var getMinimumDifference = function(root) {
     let mapArr = []
     let minNum = 0
